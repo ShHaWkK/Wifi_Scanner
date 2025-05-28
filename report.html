@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rapport Wi-Fi</title>
+    <style>
+        body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background-color: #eee; }
+        .suspect { background-color: #ffd6d6; }
+    </style>
+</head>
+<body>
+    <h1>Rapport de Scan Wi-Fi</h1>
+    <h2>Réseaux détectés</h2>
+    <table>
+        <tr><th>SSID</th><th>BSSID</th><th>Signal</th><th>Canal</th><th>Sécurité</th></tr>
+        {% for net in networks %}
+        <tr>
+            <td>{{ net.ssid }}</td>
+            <td>{{ net.bssid }}</td>
+            <td>{{ net.signal }}</td>
+            <td>{{ net.channel }}</td>
+            <td>{{ net.security }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Détection Evil Twin</h2>
+    {% if evil_twins %}
+        {% for twin in evil_twins %}
+            <h3>SSID suspect : {{ twin.ssid }}</h3>
+            <table class="suspect">
+                <tr><th>BSSID</th><th>Signal</th><th>Canal</th><th>Sécurité</th></tr>
+                {% for entry in twin.entries %}
+                <tr>
+                    <td>{{ entry.bssid }}</td>
+                    <td>{{ entry.signal }}</td>
+                    <td>{{ entry.channel }}</td>
+                    <td>{{ entry.security }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    {% else %}
+        <p>Aucun AP suspect détecté.</p>
+    {% endif %}
+</body>
+</html>
