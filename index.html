@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion Flipper</title>
+</head>
+<body>
+    <h1>Configurer le Flipper</h1>
+    <form method="post">
+        <label>IP du Flipper Zero :</label>
+        <input type="text" name="flipper_ip" value="{{ flipper_ip }}">
+        <button type="submit">Valider</button>
+    </form>
+
+    {% if status %}
+        <p style="color:green;">✅ Flipper détecté</p>
+        <a href="/scan">Scanner les réseaux Wi-Fi</a>
+    {% else %}
+        <p style="color:red;">❌ Flipper non détecté à cette IP</p>
+    {% endif %}
+</body>
+</html>
